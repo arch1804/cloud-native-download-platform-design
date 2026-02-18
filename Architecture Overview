@@ -1,0 +1,80 @@
+Architecture Overview
+
+Architecture Style
+The system follows a cloud-native, API-first microservice-oriented design.
+
+Key principles:
+-Stateless services
+-Clear service boundaries
+-Horizontal scalability
+-Observability by design
+
+Failure isolation
+The architecture is conceptual and designed to be deployment-ready in a containerized cloud environment.
+
+High-Level Components
+
+1. API Gateway
+Acts as the entry point for all client requests.
+
+Responsibilities:
+-Request routing
+-Authentication validation (future scope)
+-Traffic management
+-Rate limiting (future scope)
+
+2. Download Service
+Handles:
+-Download creation requests
+-Eligibility validation
+-Expiry timestamp assignment
+
+Stateless:
+-No session data stored in memory. All state stored in database.
+
+3. Expiry Service
+Responsible for:
+-Validating active vs expired downloads
+-Enforcing time-based access rules
+
+Can be implemented as:
+-Background worker
+-On-demand validation logic
+
+4. Monitoring Service
+Handles:
+-Metrics aggregation
+-Health endpoint exposure
+-Performance tracking
+-Supports observability and alerting.
+
+5. Database Layer
+Stores:
+-User data
+-Download records
+-Expiry timestamps
+-System configuration flags
+
+Designed for:
+-Reliability
+-Data integrity
+-Backup & recovery support
+-Deployment Model (Conceptual)
+-Each service can be containerized independently.
+-Services can scale horizontally.
+-Configuration is managed via environment variables.
+-Feature toggles enable safe rollout and rollback.
+
+This supports deployment in environments such as Kubernetes or other container orchestration platforms.
+
+Scalability Considerations
+-Stateless services allow horizontal scaling.
+-API gateway supports load balancing.
+-Monitoring ensures performance visibility.
+-Database indexing optimizes read/write operations.
+
+Failure Isolation
+The system is designed so that:
+-A monitoring failure does not stop download processing.
+-Feature toggles can disable new downloads if issues arise.
+-Health endpoints allow traffic rerouting in case of degradation.
