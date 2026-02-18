@@ -1,0 +1,95 @@
+API Specifications
+
+
+API Design Principles
+-REST-based endpoints
+-Stateless request handling
+-Clear response schemas
+-Standardized error handling
+-Version-ready structure
+
+
+1. Create Temporary Download
+Endpoint
+POST /downloads
+
+Description
+Creates a temporary download record for a user after eligibility validation.
+
+-Request Body:
+{
+  "userId": "string",
+  "contentId": "string"
+}
+
+-Success Response (200):
+{
+  "downloadId": "string",
+  "expiryTimestamp": "ISO8601 datetime",
+  "status": "active"
+}
+
+-Error Responses:
+400 – Invalid request
+403 – Eligibility failed
+500 – Internal service error
+
+
+2. Retrieve User Downloads
+Endpoint
+GET /downloads/{userId}
+
+Description
+Returns active and expired downloads for a specific user.
+
+Success Response (200):
+{
+  "downloads": [
+    {
+      "downloadId": "string",
+      "contentId": "string",
+      "expiryTimestamp": "ISO8601 datetime",
+      "status": "active | expired"
+    }
+  ]
+}
+
+
+3. Health Check
+Endpoint
+GET /health
+
+Description
+Indicates service availability and readiness for traffic.
+
+Success Response (200)
+{
+  "status": "healthy"
+}
+
+4. Metrics Endpoint
+Endpoint
+GET /metrics
+
+Description
+Returns system performance and usage statistics.
+
+Sample Response:
+{
+  "downloadRequests": 1200,
+  "successRate": 0.97,
+  "failureRate": 0.03,
+  "averageLatencyMs": 180
+}
+
+5. Feature Toggle Control
+Endpoint
+POST /admin/toggle
+
+Description
+Enables or disables download processing feature for controlled rollout or rollback.
+
+Request Body:
+{
+  "downloadFeatureEnabled": true
+}
