@@ -1,0 +1,68 @@
+1. Key Metrics
+
+Business-Level Metrics
+-Total download requests
+-Successful downloads
+-Failed download attempts
+-Expiry enforcement accuracy
+-Feature usage rate
+
+These metrics help measure adoption and reliability.
+
+System-Level Metrics
+-Request rate (requests per minute)
+-Error rate (percentage of failed requests)
+-Average response latency (ms)
+-Service uptime percentage
+-Health check response time
+
+These metrics support operational monitoring.
+
+
+2. Logging Strategy
+
+The system should generate structured logs including:
+-Timestamp
+-Service name
+-Request ID (correlation ID)
+-Event type (success, failure, expiry event)
+-Error classification
+
+Structured logging enables:
+-Faster incident investigation
+-Root cause analysis
+-Cross-service traceability
+
+
+3. Health Monitoring
+
+Each service exposes a /health endpoint.
+
+Health states:
+-Healthy
+-Degraded
+-Unavailable
+
+These endpoints support load balancer decisions and traffic rerouting.
+
+
+4. Alerting Thresholds
+
+Alerts should trigger when:
+-Error rate exceeds defined threshold (e.g., > 5%)
+-Latency exceeds acceptable limits
+-Expiry mismatches are detected
+-Service health endpoint fails consecutively
+
+Alerts enable early detection and proactive mitigation.
+
+
+5. Product Owner Perspective
+
+From a product ownership standpoint, observability ensures:
+
+-Feature reliability aligns with business expectations
+-Release quality is measurable
+-Incident response is data-driven
+-Stakeholders receive transparency during outages
+Observability transforms the feature from a static capability into a measurable, controllable product component.
